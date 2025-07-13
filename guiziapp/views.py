@@ -1,7 +1,7 @@
-from django.shortcuts import render
-from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import redirect
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout # Asegúrate de que 'logout' esté importado aquí
 from django.contrib import messages
+
 
 def home(request):
     return render(request, 'home.html')
@@ -10,22 +10,27 @@ def sobre_nosotros(request):
     return render(request, 'sobre_nosotros.html')
 
 def signup_view(request):
-    return render(request, 'signup.html')  # o lo que necesites
+    # Por ahora, simplemente renderiza la plantilla de registro.
+    # Aquí iría la lógica para manejar el formulario de registro.
+    return render(request, 'signup.html')
 
 def login_view(request):
     if request.method == 'POST':
-        username = request.POST.get('username')  # O correo si lo prefieres
+        username = request.POST.get('username')
         password = request.POST.get('password')
 
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('guiziapp:home')  # Redirige a donde desees
+            messages.success(request, '¡Has iniciado sesión correctamente!')
+            return redirect('guiziapp:home')  # Redirige al inicio después del login
         else:
-            messages.error(request, 'Usuario o contraseña incorrectos.')
+            messages.error(request, 'Usuario o contraseña incorrectos. Por favor, inténtalo de nuevo.')
 
-    return render(request, 'guiziapp/login.html')
+    return render(request, 'login.html')
 
+# ¡¡¡DEBES AÑADIR ESTA FUNCIÓN!!!
 def logout_view(request):
-    logout(request)
-    return redirect('guiziapp:login')
+    logout(request) # Llama a la función de Django para cerrar la sesión
+    messages.info(request, 'Has cerrado sesión exitosamente.') # Opcional: mensaje de confirmación
+    return redirect('guiziapp:login') # Redirige al usuario a la página de login después de cerrar sesión

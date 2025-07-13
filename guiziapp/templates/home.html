@@ -1,158 +1,153 @@
-{% extends "base.html" %}
 {% load static %}
 
-{% block title %}Inicio - Guizi{% endblock %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio - Guizi</title> {# El título se define directamente aquí #}
 
-{% block content %}
-  <!-- Importar la fuente Jersey 15 desde Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Jersey+15&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+15&display=swap" rel="stylesheet">
 
-  <style>
-    .section-green {
-      background-color: #135352;
-      padding: 1rem;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      align-items: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-      position: relative; 
-    }
+    <style>
+        /* Aquí va todo el CSS que tenías en el block content de tu home.html original */
+        .section-green {
+            background-color: #135352;
+            padding: 1rem;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            position: relative; 
+        }
 
-    .circle {
-    position: absolute;
-    top: 98%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 120px;
-    height: 120px;
-    background-color: #135352;
-    border-radius: 50%;
-    z-index: 0;
-    
-  }
+        .circle {
+            position: absolute;
+            top: 98%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            background-color: #135352;
+            border-radius: 50%;
+            z-index: 0;
+        }
 
+        .section-green h2 {
+            font-family: 'Jersey 15', sans-serif;
+            font-size: 50px;
+            color: white;
+        }
 
-      .section-green h2 {
-      font-family: 'Jersey 15', sans-serif;
-      font-size: 50px;
-      color: white;
-    }
+        .section-white {
+            background-color: #f9f9f9;
+            color: #135352;
+            padding: 2rem;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+        }
 
-    .section-white {
-      background-color: #f9f9f9;
-      color: #135352;
-      padding: 2rem;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-      font-size: 0.9rem;
-    }
+        .section-icons {
+            background-color: #135352;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
 
-    .section-icons {
-      background-color: #135352;
-      color: white;
-      padding: 2rem;
-      text-align: center;
-    }
+        .icons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
 
-    .icons {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      margin-top: 1rem;
-      flex-wrap: wrap;
-    }
+        .icon-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-weight: 600;
+            color: white;
+        }
 
-    .icon-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      font-weight: 600;
-      color: white;
-    }
+        .icon-item img {
+            max-width: 100px;
+            height: auto;
+        }
 
-    .icon-item img {
-      max-width: 100px;
-      height: auto;
-    }
+        button.comenzar {
+            background-color: #f58634;
+            border: none;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
 
-    button.comenzar {
-      background-color: #f58634;
-      border: none;
-      color: white;
-      padding: 0.5rem 1.5rem;
-      font-weight: 700;
-      cursor: pointer;
-      border-radius: 5px;
-      font-size: 1rem;
-    }
+        .img-large {
+            max-width: 480px;
+            height: auto;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    {# Incluimos el encabezado aquí #}
+    {% include 'partials/header.html' %}
 
-    .img-large {
-      max-width: 480px;
-      height: auto;
-      margin-top: 2rem;
-      
-    }
-  </style>
+    <section class="section-green">
+        <div class="circle"></div>
+        <div class="hero-img">
+            <img src="{% static 'img/5.png' %}" alt="Iguana cool" class="img-large" />
+        </div>
+        <div class="hero-text">
+            <h2>
+                Aprende<br />
+                jugando<br />
+                con Guizi
+            </h2>
+        </div>
+    </section>
 
-  <!-- Sección inicial: Imagen izquierda, texto derecha -->
+    <section class="section-white">
+        <div class="guizi-text">
+            <h2>¿Qué es Guizi?</h2>
+            <p>Guizi es una plataforma de aprendizaje donde puedes crear preguntas tipo trivia, competir con otros y reforzar tu conocimiento jugando.</p>
+        </div>
+        <div class="guizi-img">
+            <img src="{% static 'img/6.png' %}" alt="¿Qué es Guizi?" class="img-large" />
+        </div>
+    </section>
 
-<section class="section-green">
-  <div class="circle"></div>
+    <section class="section-icons">
+        <h2>¿Quién puede usar Guizi?</h2>
+        <div class="icons">
+            <div class="icon-item">
+                <img src="{% static 'img/3.png' %}" alt="Estudiantes" />
+                <span>Estudiantes</span>
+            </div>
+            <div class="icon-item">
+                <img src="{% static 'img/2.png' %}" alt="Profesores" />
+                <span>Profesores</span>
+            </div>
+            <div class="icon-item">
+                <img src="{% static 'img/4.png' %}" alt="Curiosos" />
+                <span>Curiosos</span>
+            </div>
+        </div>
+    </section>
 
-  <div class="hero-img">
-    <img src="{% static 'img/5.png' %}" alt="Iguana cool" class="img-large" />
-  </div>
-
-  <div class="hero-text">
-    <h2>
-      Aprende<br />
-      jugando<br />
-      con Guizi
-    </h2>
-  </div>
-</section>
-
-
-  <!-- ¿Qué es Guizi? -->
-  <section class="section-white">
-  <div class="guizi-text">
-    <h2>¿Qué es Guizi?</h2>
-    <p>Guizi es una plataforma de aprendizaje donde puedes crear preguntas tipo trivia, competir con otros y reforzar tu conocimiento jugando.</p>
-  </div>
-
-  <div class="guizi-img">
-    <img src="{% static 'img/6.png' %}" alt="¿Qué es Guizi?" class="img-large" />
-  </div>
-</section>
-
-
-  <!-- ¿Quién puede usar Guizi? -->
-  <section class="section-icons">
-    <h2>¿Quién puede usar Guizi?</h2>
-    <div class="icons">
-      <div class="icon-item">
-        <img src="{% static 'img/3.png' %}" alt="Estudiantes" />
-        <span>Estudiantes</span>
-      </div>
-      <div class="icon-item">
-        <img src="{% static 'img/2.png' %}" alt="Profesores" />
-        <span>Profesores</span>
-      </div>
-      <div class="icon-item">
-        <img src="{% static 'img/4.png' %}" alt="Curiosos" />
-        <span>Curiosos</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- Llamado a la acción -->
-  <section style="background:#f9f9f9; padding: 2rem; text-align:center; color: #135352;">
-    <h2>Empieza a jugar ahora.</h2>
-    <button class="comenzar">¡Comenzar!</button>
-  </section>
-{% endblock %}
+    <section style="background:#f9f9f9; padding: 2rem; text-align:center; color: #135352;">
+        <h2>Empieza a jugar ahora.</h2>
+        <button class="comenzar">¡Comenzar!</button>
+    </section>
+</body>
+</html>

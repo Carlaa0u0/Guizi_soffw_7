@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %} {# <-- IMPORTANTE: Necesitas esto si usas {% static %} para las imágenes #}
 
 {% block title %}Iniciar sesión - GUIZI{% endblock %}
 
@@ -6,7 +7,8 @@
 <div class="login-container">
     <div class="left-panel">
         <div class="logo">
-            <img src="https://via.placeholder.com/50x50/388e3c/ffffff?text=Logo" alt="Guizi Logo">
+            {# Es una buena práctica usar {% static %} para las imágenes de tu propio proyecto #}
+            <img src="{% static 'img/logo.png' %}" alt="Guizi Logo">
             <h1>GUIZI</h1>
         </div>
         <h2>Iniciar sesión</h2>
@@ -26,23 +28,52 @@
             <button type="submit">ENTRAR</button>
         </form>
 
-        <p class="register-link">¿No tienes cuenta? <a href="{% url 'register' %}">Regístrate aquí</a></p>
+        <p class="register-link">¿No tienes cuenta? <a href="{% url 'guiziapp:signup' %}">Regístrate aquí</a></p> {# <-- NOMBRE DE URL CORREGIDO #}
 
         <a href="#" class="google-login-btn">
+            {# De nuevo, considera poner el logo de Google en tus archivos estáticos si quieres que se sirva localmente #}
             <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google Logo" />
             Inicia sesión con Google
         </a>
     </div>
 
     <div class="right-panel">
-        <img src="https://via.placeholder.com/400x500/388e3c/ffffff?text=Iguana" alt="Iguana">
+        {# Considera usar {% static %} aquí también si esta imagen es de tu proyecto #}
+        <img src="{% static 'img/iguana.png' %}" alt="Iguana"> 
     </div>
 </div>
 {% endblock %}
 
 {% block extra_css %}
 <style>
-/* AQUÍ PEGAS TODO EL CSS DEL LOGIN */
-/* ... el CSS que ya tienes en tu login.html ... */
+/* AQUÍ VA TODO EL CSS DEL LOGIN */
+/* Copia todas las reglas CSS relacionadas con .login-container, .left-panel, .form-group, 
+   .forgot-password, button, .register-link, .google-login-btn, .right-panel,
+   y las @media queries de tu login.html anterior en este bloque de estilo.
+*/
+
+/* Ejemplo de algo de CSS que necesitas copiar aquí: */
+.login-container {
+    display: flex;
+    background-color: #1a1a1a;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    max-width: 900px;
+    width: 90%;
+    margin: 40px auto;
+}
+
+/* ... (todas las demás reglas CSS específicas del login) ... */
+
+@media (max-width: 768px) {
+    .login-container {
+        flex-direction: column;
+        max-width: 400px;
+    }
+    .right-panel {
+        height: 250px;
+    }
+}
 </style>
 {% endblock %}

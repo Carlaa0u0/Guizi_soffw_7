@@ -1,0 +1,17 @@
+{% load static %} 
+
+<header style="background-color: #388e3c; padding: 10px 0;">
+  <div style="max-width: 1200px; margin: auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px;">
+    <div class="logo" style="display: flex; align-items: center; color: white;">
+      <img src="{% static 'img/logo.png' %}" alt="Logo" style="height: 40px; margin-right: 10px;">
+      <h1 style="margin: 0; font-size: 1.5em;">GUIZI</h1>
+    </div>
+    <nav>
+      <a href="{% url 'guiziapp:home' %}" style="color: white; margin-right: 15px; text-decoration: none;">Inicio</a>
+      <a href="{% url 'guiziapp:login' %}" style="color: white; margin-right: 15px; text-decoration: none;">Iniciar sesión</a>
+      <a href="{% url 'guiziapp:signup' %}" style="color: white; text-decoration: none;">Registro</a> {# Usamos 'signup' ya que es el nombre en tu urls.py #}
+      {# Si tienes un botón de logout que quieres mostrar condicionalmente #}
+      {# <a href="{% url 'guiziapp:logout' %}" style="color: white; text-decoration: none;">Cerrar Sesión</a> #}
+    </nav>
+  </div>
+</header>
