@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Header Actividades</title>
+    <style>
+        
+        .header {
+            background-color: #2e7d32; /* Verde oscuro similar al de la imagen */
+            color: white;
+            padding: 10px 5%; /* Relleno horizontal responsivo */
+            display: flex;
+            justify-content: space-between; /* Distribuye los elementos: logo a la izquierda, nav al centro, botón a la derecha */
+            align-items: center; /* Centra los elementos verticalmente */
+
+            position: fixed; /* Fija el encabezado en la parte superior */
+            top: 0; /* Lo fija en la parte superior */
+            left: 0; /* Lo fija en la parte izquierda */
+            width: 100%; /* El encabezado abarca todo el ancho */
+            z-index: 1000; /* Asegura que esté por encima de otro contenido */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Sutil sombra para profundidad */
+            box-sizing: border-box; /* Asegura que el padding se incluya en el ancho total */
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+        .logo {
+            height: 40px; /* Adjust as needed */
+            margin-right: 10px;
+             max-width: 100%;
+            height: auto;
+        }
+        
+        .app-name {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+            padding-bottom: 5px; /* For underline effect */
+        }
+        .nav-links a.active {
+            border-bottom: 2px solid white; /* Underline for active link */
+        }
+        header .logout-button {
+            background-color: #ff8f00; /* Orange from the image */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .header .logout-button:hover {
+            background-color: #e67c00;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <img src="https://via.placeholder.com/40x40?text=Logo" alt="GUIIZI Logo" class="logo"> <span class="app-name">GUIZI</span>
+        </div>
+        <nav class="nav-links">
+            <a href="#">Principal</a>
+            <a href="#" class="active">Actividades</a>
+        </nav>
+        <button class="logout-button">Cerrar Sesión</button>
+    </header>
+</body>
+</html>

@@ -34,3 +34,14 @@ def logout_view(request):
     logout(request) # Llama a la función de Django para cerrar la sesión
     messages.info(request, 'Has cerrado sesión exitosamente.') # Opcional: mensaje de confirmación
     return redirect('guiziapp:login') # Redirige al usuario a la página de login después de cerrar sesión
+
+def lista_actividades_view(request):
+    # Aquí iría la lógica para manejar las actividades.
+    # Por ahora, simplemente renderiza una plantilla de actividades.
+    return render(request, 'lista_actividades.html')
+
+
+def actividades_view(request):
+    # Aquí iría la lógica para manejar las actividades.
+    # Por ahora, simplemente renderiza una plantilla de actividades.
+    return render(request, 'actividades.html')

@@ -145,9 +145,22 @@
         </div>
     </section>
 
-    <section style="background:#f9f9f9; padding: 2rem; text-align:center; color: #135352;">
-        <h2>Empieza a jugar ahora.</h2>
-        <button class="comenzar">¡Comenzar!</button>
-    </section>
+    
+    <h2>Empieza a jugar ahora.</h2>
+    <a href="{% url 'guiziapp:lista_actividades' %}" class="comenzar" style="
+        /* Aquí van los estilos de tu botón para que se vea bien */
+        padding: 0.8rem 1.5rem;
+        border-radius: 15px;
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+        min-width: 120px;
+        text-align: center;
+        text-decoration: none;
+        background-color: #f58634;
+        color: white;
+        display: inline-block;
+    ">¡Comenzar!</a>
+</section>
 </body>
 </html>
