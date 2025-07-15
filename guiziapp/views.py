@@ -36,12 +36,11 @@ def logout_view(request):
     return redirect('guiziapp:login') # Redirige al usuario a la página de login después de cerrar sesión
 
 def lista_actividades_view(request):
+    # Aquí iría la lógica para manejar la lista de actividades.
+    # Por ahora, simplemente renderiza una plantilla de lista de actividades.
+    return render(request, 'lista_actividades.html')    
+
+def mis_actividades_view(request):
     # Aquí iría la lógica para manejar las actividades.
     # Por ahora, simplemente renderiza una plantilla de actividades.
-    return render(request, 'lista_actividades.html')
-
-
-def actividades_view(request):
-    # Aquí iría la lógica para manejar las actividades.
-    # Por ahora, simplemente renderiza una plantilla de actividades.
-    return render(request, 'actividades.html')
+    return render(request, 'mis_actividades.html')

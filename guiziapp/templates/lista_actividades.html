@@ -1,3 +1,4 @@
+{% load static %}
 {% include 'partials/header_actividades.html' %}
 
 <!DOCTYPE html>
@@ -6,175 +7,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Lista Actividades</title>
-    <style>
-        /* Estilos generales del cuerpo y HTML */
-        html, body {
-            margin: 0; /* Elimina el margen predeterminado del navegador */
-            font-family: Arial, sans-serif; /* Fuente Arial para una apariencia más cercana a la imagen */
-            background-color: #f0f2f5; /* Fondo más claro como se ve en la segunda imagen */
-            color: #333; /* Color de texto principal */
-            line-height: 1.6; /* Altura de línea para mejor legibilidad */
-            /* Añade un margen superior para empujar el contenido por debajo del encabezado fijo */
-            /* Se asume que la altura del encabezado es de aproximadamente 60-70px (10px padding-top + 40px logo + 10px padding-bottom) */
-            margin-top: 40px; /* Ajusta este valor si la altura real de tu encabezado cambia */
-            box-sizing: border-box; /* Asegura que el padding se incluya en el ancho/alto total */
-        }
 
-        /* Contenedor principal del contenido */
-        .content-container {
-            max-width: 1200px; /* Ancho máximo del contenedor */
-            margin: 30px auto; /* Margen superior e inferior, y centrado horizontalmente */
-            padding: 0 20px; /* Añade un padding horizontal */
-        }
-
-        /* Sección de pestañas */
-        .tabs {
-            display: flex; /* Usa flexbox para alinear las pestañas */
-            margin-bottom: 30px; /* Espacio debajo de las pestañas */
-            justify-content: flex-start; /* Alinea las pestañas a la izquierda */
-            gap: 30px; /* Espacio entre los botones de las pestañas */
-            padding-left: 10px; /* Pequeña sangría para alinear con las tarjetas */
-        }
-
-        .tab-button {
-            background: none; /* Sin fondo */
-            border: none; /* Sin borde */
-            padding: 10px 0; /* Padding vertical, el horizontal se maneja con gap */
-            font-size: 18px; /* Tamaño de fuente */
-            cursor: pointer; /* Cursor de puntero al pasar por encima */
-            color: #777; /* Color más suave para las pestañas inactivas */
-            position: relative; /* Necesario para la línea inferior */
-            font-weight: bold; /* Todas las pestañas en negrita según la imagen */
-            transition: color 0.3s ease; /* Transición suave para el color */
-        }
-
-        .tab-button:hover {
-            color: #555; /* Color al pasar el ratón */
-        }
-
-        .tab-button.active {
-            color: #333; /* Color más oscuro para la pestaña activa */
-        }
-
-        .tab-button.active::after {
-            content: ''; /* Contenido vacío para crear la línea */
-            position: absolute; /* Posicionamiento absoluto para la línea */
-            left: 0;
-            right: 0;
-            bottom: -5px; /* Posiciona la línea debajo del texto */
-            height: 3px; /* Altura de la línea */
-            background-color: #ff8f00; /* Color naranja para la línea */
-            border-radius: 2px; /* Bordes redondeados para la línea */
-        }
-
-        /* Cuadrícula de actividades */
-        .activity-grid {
-            display: grid; /* Usa CSS Grid para el diseño de las tarjetas */
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); /* Columnas responsivas */
-            gap: 25px; /* Espacio entre las tarjetas */
-            padding-top: 10px; /* Espacio desde las pestañas hasta la cuadrícula */
-        }
-
-        /* Contenedor de cada tarjeta de actividad individual */
-        .activity-card-container {
-            background-color: white; /* Fondo blanco para la tarjeta */
-            border-radius: 10px; /* Bordes redondeados */
-            padding: 15px; /* Relleno interno */
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Sombra suave */
-            display: flex; /* Usa flexbox para el contenido interno de la tarjeta */
-            flex-direction: column; /* Contenido en columna */
-            align-items: center; /* Centra los elementos horizontalmente */
-            text-align: center; /* Centra el texto dentro de la tarjeta */
-            transition: transform 0.2s ease, box-shadow 0.2s ease; /* Transiciones suaves para efectos de hover */
-            cursor: pointer; /* Cursor de puntero */
-            overflow: hidden; /* Asegura que la imagen respete los bordes redondeados */
-        }
-
-        .activity-card-container:hover {
-            transform: translateY(-5px); /* Efecto de elevación al pasar el ratón */
-            box-shadow: 0 6px 16px rgba(0,0,0,0.15); /* Sombra ligeramente más fuerte al pasar el ratón */
-        }
-
-        .activity-card {
-            width: 100%; /* Asegura que el contenido de la tarjeta ocupe todo el ancho de su contenedor */
-        }
-
-        .activity-card img {
-            width: 100%; /* Ancho completo de la imagen */
-            height: 160px; /* Altura fija de la imagen */
-            object-fit: cover; /* Recorta la imagen para que cubra el área */
-            border-radius: 8px; /* Bordes redondeados para la imagen */
-            margin-bottom: 15px; /* Espacio debajo de la imagen */
-            display: block; /* Elimina espacio extra debajo de la imagen */
-        }
-
-        .exercise-name {
-            font-size: 20px; /* Tamaño de fuente más grande para el nombre del ejercicio */
-            font-weight: bold; /* Negrita */
-            color: #333; /* Color de texto */
-            margin-bottom: 5px; /* Espacio debajo del nombre del ejercicio */
-            white-space: nowrap; /* Evita que el texto se envuelva si es corto */
-            overflow: hidden; /* Oculta el desbordamiento si el nombre es largo */
-            text-overflow: ellipsis; /* Añade puntos suspensivos para nombres largos */
-        }
-
-        .author-name {
-            font-size: 15px; /* Tamaño de fuente ligeramente más grande para el autor */
-            color: #777; /* Color de texto */
-        }
-
-        /* Ajustes responsivos */
-        @media (max-width: 768px) {
-            /* Los estilos del encabezado están en header_actividades.html, por lo que no se incluyen aquí */
-            .tabs {
-                justify-content: center; /* Centra las pestañas en pantallas pequeñas */
-                padding-left: 0; /* Elimina la sangría en pantallas pequeñas */
-            }
-            .activity-grid {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Ajusta el tamaño mínimo de las tarjetas */
-            }
-        }
-    </style>
+    <!-- Enlace al CSS externo -->
+    <link rel="stylesheet" href="{% static 'css/card_actividades.css' %}">
 </head>
 <body>
-    <!-- El encabezado se incluye aquí mediante el motor de plantillas de Django -->
-    <!-- {% include 'partials/header_actividades.html' %} -->
-
     <div class="content-container">
+        <!-- Pestañas -->
         <div class="tabs">
             <button class="tab-button active">Participando</button>
             <button class="tab-button">Creado por mí</button>
         </div>
+
+        <!-- Cuadrícula de tarjetas -->
         <div class="activity-grid">
-            <div class="activity-card-container">
-                <div class="activity-card">
-                    <!-- Se actualizó la fuente de la imagen para usar un marcador de posición que funciona de inmediato -->
-                    <img src="https://placehold.co/200x160/cccccc/333333?text=Ejercicio+1" alt="Imagen de ejercicio" />
-                    <div class="exercise-name">Nombre del ejercicio</div>
-                    <div class="author-name">Nombre del autor</div>
-                </div>
-            </div>
-            <div class="activity-card-container">
-                <div class="activity-card">
-                    <img src="https://placehold.co/200x160/cccccc/333333?text=Ejercicio+2" alt="Imagen de ejercicio" />
-                    <div class="exercise-name">Nombre del ejercicio</div>
-                    <div class="author-name">Nombre del autor</div>
-                </div>
-            </div>
-            <div class="activity-card-container">
-                <div class="activity-card">
-                    <img src="https://placehold.co/200x160/cccccc/333333?text=Ejercicio+3" alt="Imagen de ejercicio" />
-                    <div class="exercise-name">Nombre del ejercicio</div>
-                    <div class="author-name">Nombre del autor</div>
-                </div>
-            </div>
-            <div class="activity-card-container">
-                <div class="activity-card">
-                    <img src="https://placehold.co/200x160/cccccc/333333?text=Ejercicio+4" alt="Imagen de ejercicio" />
-                    <div class="exercise-name">Nombre del ejercicio</div>
-                    <div class="author-name">Nombre del autor</div>
-                </div>
-            </div>
+            {% include 'partials/card_actividades.html' with image_url="https://placehold.co/200x160?text=Ejercicio+1" exercise_name="Nombre del ejercicio 1" author_name="Nombre del autor" %}
+            {% include 'partials/card_actividades.html' with image_url="https://placehold.co/200x160?text=Ejercicio+2" exercise_name="Nombre del ejercicio 2" author_name="Nombre del autor" %}
+            {% include 'partials/card_actividades.html' with image_url="https://placehold.co/200x160?text=Ejercicio+3" exercise_name="Nombre del ejercicio 3" author_name="Nombre del autor" %}
+            {% include 'partials/card_actividades.html' with image_url="https://placehold.co/200x160?text=Ejercicio+4" exercise_name="Nombre del ejercicio 4" author_name="Nombre del autor" %}
         </div>
     </div>
 </body>
