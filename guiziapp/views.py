@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout # Asegúrate de que 'logout' esté importado aquí
 from django.contrib import messages
+from .models import Actividad
+from django.contrib.auth.decorators import login_required
+
 
 
 def home(request):
@@ -35,10 +38,18 @@ def logout_view(request):
     messages.info(request, 'Has cerrado sesión exitosamente.') # Opcional: mensaje de confirmación
     return redirect('guiziapp:login') # Redirige al usuario a la página de login después de cerrar sesión
 
+
+
+
 def lista_actividades_view(request):
-    # Aquí iría la lógica para manejar la lista de actividades.
-    # Por ahora, simplemente renderiza una plantilla de lista de actividades.
-    return render(request, 'lista_actividades.html')    
+   # Para pruebas, muestra todas las actividades en ambas secciones
+    actividades_participando = Actividad.objects.all()
+    actividades_creadas = Actividad.objects.all()
+
+    return render(request, 'lista_actividades.html', {
+        'actividades_participando': actividades_participando,
+        'actividades_creadas': actividades_creadas
+})
 
 def mis_actividades_view(request):
     # Aquí iría la lógica para manejar las actividades.

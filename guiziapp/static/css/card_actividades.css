@@ -14,12 +14,16 @@ html, body {
     padding: 0 20px;
 }
 
+/* ----- Pestañas ----- */
+
 .tabs {
     display: flex;
     margin-bottom: 30px;
     justify-content: flex-start;
     gap: 30px;
     padding-left: 10px;
+    position: relative; /*nueva liena*/
+    border-bottom: 1px solid #ccc;
 }
 
 .tab-button {
@@ -32,6 +36,7 @@ html, body {
     position: relative;
     font-weight: bold;
     transition: color 0.3s ease;
+    position: relative; /*nueva liena*/
 }
 
 .tab-button:hover {
@@ -42,16 +47,29 @@ html, body {
     color: #333;
 }
 
-.tab-button.active::after {
-    content: '';
+.tab-indicator {
     position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -5px;
+    bottom: -1px;
     height: 3px;
     background-color: #ff8f00;
     border-radius: 2px;
+    transition: all 0.3s ease;
+    width: 0;
+    left: 0;
 }
+
+/* ----- Contenido dinámico de pestañas ----- */
+.tab-content {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.tab-content.active {
+    display: grid;
+    opacity: 1;
+}
+
 
 .activity-grid {
     display: grid;

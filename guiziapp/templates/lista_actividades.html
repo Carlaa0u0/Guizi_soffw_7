@@ -15,17 +15,68 @@
     <div class="content-container">
         <!-- Pestañas -->
         <div class="tabs">
-            <button class="tab-button active">Participando</button>
-            <button class="tab-button">Creado por mí</button>
+            <button class="tab-button active" data-tab="participando">Participando</button>
+            <button class="tab-button" data-tab="creado">Creado por mí</button>
+            <div class="tab-indicator"></div> <!-- Línea amarilla animada -->
+
         </div>
 
-        <!-- Cuadrícula de tarjetas -->
-        <div class="activity-grid">
-            {% include 'partials/card_actividades.html' with image_url="https://placehold.co/200x160?text=Ejercicio+1" exercise_name="Nombre del ejercicio 1" author_name="Nombre del autor" %}
-            {% include 'partials/card_actividades.html' with image_url="https://placehold.co/200x160?text=Ejercicio+2" exercise_name="Nombre del ejercicio 2" author_name="Nombre del autor" %}
-            {% include 'partials/card_actividades.html' with image_url="https://placehold.co/200x160?text=Ejercicio+3" exercise_name="Nombre del ejercicio 3" author_name="Nombre del autor" %}
-            {% include 'partials/card_actividades.html' with image_url="https://placehold.co/200x160?text=Ejercicio+4" exercise_name="Nombre del ejercicio 4" author_name="Nombre del autor" %}
-        </div>
-    </div>
+<!-- Sección PARTICIPANDO -->
+<div class="activity-grid tab-content active" data-tab="participando">
+    {% include 'partials/card_actividades.html' with image_url="https://placehold.co/200x160?text=Ejercicio+1" exercise_name="Ejercicio 1" author_name="Autor A" %}
+    {% include 'partials/card_actividades.html' with image_url="https://placehold.co/200x160?text=Ejercicio+2" exercise_name="Ejercicio 2" author_name="Autor B" %}
+    {% include 'partials/card_actividades.html' with image_url="https://placehold.co/200x160?text=Ejercicio+3" exercise_name="Ejercicio 3" author_name="Autor C" %}
+    {% include 'partials/card_actividades.html' with image_url="https://placehold.co/200x160?text=Ejercicio+4" exercise_name="Ejercicio 4" author_name="Autor D" %}
+</div>
+
+<!-- Sección CREADO POR MÍ (sin tarjetas, solo texto) -->
+<div class="activity-grid tab-content" data-tab="creado">
+    <p style="font-size: 18px; color: #555; text-align: center;">No tienes actividades creadas aún.</p>
+</div>
+
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const tabButtons = document.querySelectorAll(".tab-button");
+    const tabContents = document.querySelectorAll(".tab-content");
+    const indicator = document.querySelector(".tab-indicator");
+
+    function activateTab(tabName, clickedButton) {
+        tabButtons.forEach(btn => btn.classList.remove("active"));
+        clickedButton.classList.add("active");
+
+        tabContents.forEach(content => {
+            if (content.dataset.tab === tabName) {
+                content.classList.add("active");
+            } else {
+                content.classList.remove("active");
+            }
+        });
+
+        const tabRect = clickedButton.getBoundingClientRect();
+        const containerRect = clickedButton.parentElement.getBoundingClientRect();
+        indicator.style.left = (tabRect.left - containerRect.left) + "px";
+        indicator.style.width = tabRect.width + "px";
+    }
+
+    // Inicializa posición de la línea amarilla
+    const initialActive = document.querySelector(".tab-button.active");
+    if (initialActive) {
+        activateTab(initialActive.dataset.tab, initialActive);
+    }
+
+    tabButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            activateTab(button.dataset.tab, button);
+        });
+    });
+});
+</script>
+
+
+
+
+
 </body>
 </html>

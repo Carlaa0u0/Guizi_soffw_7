@@ -5,12 +5,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio - Guizi</title> {# El título se define directamente aquí #}
+    <title>Inicio - Guizi</title>
 
+    <!-- Tipografías -->
     <link href="https://fonts.googleapis.com/css2?family=Jersey+15&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
 
     <style>
-        /* Aquí va todo el CSS que tenías en el block content de tu home.html original */
+        html, body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Lato', sans-serif;
+        }
+
+        h2 {
+            font-family: 'Jersey 15', sans-serif;
+        }
+
+        p, span, a, button {
+            font-family: 'Lato', sans-serif;
+        }
+
         .section-green {
             background-color: #135352;
             padding: 1rem;
@@ -37,7 +53,7 @@
 
         .section-green h2 {
             font-family: 'Jersey 15', sans-serif;
-            font-size: 50px;
+            font-size: 65px; 
             color: white;
         }
 
@@ -81,7 +97,8 @@
             height: auto;
         }
 
-        button.comenzar {
+        button.comenzar,
+        a.comenzar {
             background-color: #f58634;
             border: none;
             color: white;
@@ -90,6 +107,7 @@
             cursor: pointer;
             border-radius: 5px;
             font-size: 1rem;
+            font-family: 'Lato', sans-serif;
         }
 
         .img-large {
@@ -97,10 +115,48 @@
             height: auto;
             margin-top: 2rem;
         }
+
+        .guizi-text {
+            max-width: 500px;
+        }
+
+        .guizi-text h2 {
+            font-size: 65px;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .guizi-text p {
+            font-size: 18px;
+            line-height: 1.6;
+            white-space: normal;
+        }
+
+        h2.empezar {
+            color: #1E6C6A;
+            font-size: 40px;
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 768px) {
+            .section-white {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .guizi-img, .guizi-text {
+                width: 100%;
+            }
+
+            .img-large {
+                max-width: 90%;
+                margin: 1rem auto;
+            }
+        }
     </style>
 </head>
 <body>
-    {# Incluimos el encabezado aquí #}
+
     {% include 'partials/header.html' %}
 
     <section class="section-green">
@@ -120,7 +176,12 @@
     <section class="section-white">
         <div class="guizi-text">
             <h2>¿Qué es Guizi?</h2>
-            <p>Guizi es una plataforma de aprendizaje donde puedes crear preguntas tipo trivia, competir con otros y reforzar tu conocimiento jugando.</p>
+            <p>
+                Guizi es una plataforma de aprendizaje<br>
+                donde puedes crear preguntas tipo trivia,<br>
+                competir con otros<br>
+                y reforzar tu conocimiento jugando.
+            </p>
         </div>
         <div class="guizi-img">
             <img src="{% static 'img/6.png' %}" alt="¿Qué es Guizi?" class="img-large" />
@@ -145,10 +206,9 @@
         </div>
     </section>
 
-    
-    <h2>Empieza a jugar ahora.</h2>
+    <div style="text-align: center; margin-top: 1rem;">
+    <h2 class="empezar">Empieza a jugar ahora.</h2>
     <a href="{% url 'guiziapp:lista_actividades' %}" class="comenzar" style="
-        /* Aquí van los estilos de tu botón para que se vea bien */
         padding: 0.8rem 1.5rem;
         border-radius: 15px;
         border: none;
@@ -161,6 +221,6 @@
         color: white;
         display: inline-block;
     ">¡Comenzar!</a>
-</section>
+
 </body>
 </html>
