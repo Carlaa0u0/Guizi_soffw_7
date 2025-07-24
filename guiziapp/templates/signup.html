@@ -2,71 +2,92 @@
 {% load static %}
 
 {% block title %}Crear cuenta - GUIZI{% endblock %}
+
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/signup.css' %}">
+<link rel="stylesheet" href="{% static 'css/signup1.css' %}">
 {% endblock %}
+
 
 {% block content %}
 <div class="register-container">
-    <div class="left-panel">
-        <div class="logo">
-            <img src="{% static 'img/logo.png' %}" alt="Guizi Logo">
-            <h1>GUIZI</h1>
+
+    <div class="main-panel">
+        <div class="header">
+            <div class="logo-container">
+                <img src="{% static 'img/GUISI-LOGO.png' %}" alt="Guizi Logo">
+            </div>
+            <h2>Crea tu cuenta</h2>
+            <p>¡Completa el formulario!</p>
         </div>
-        <h2>Crea tu cuenta</h2>
-        <p>¡Completa el formulario!</p>
 
         <form method="post">
             {% csrf_token %}
-            
+
             <div class="form-row">
-                <div class="form-group half-width">
+                <div class="form-group">
                     <input type="text" name="first_name" placeholder="Nombre" required>
                 </div>
-                <div class="form-group half-width">
+                <div class="form-group">
                     <input type="text" name="last_name" placeholder="Apellido" required>
                 </div>
             </div>
 
             <div class="form-row">
-                <div class="form-group half-width">
-                    <input type="text" name="role" placeholder="tu rol" required>
+                <div class="form-group">
+                    <select name="role" required>
+                        <option value="" disabled selected>Seleccione su rol</option>
+                        <option value="Profesor">Profesor</option>
+                        <option value="Estudiante">Estudiante</option>
+                    </select>
                 </div>
-                <div class="form-group half-width">
-                    <input type="number" name="age" placeholder="edad" required>
+                <div class="form-group">
+                    <input type="number" name="age" placeholder="Edad" required>
                 </div>
-            </div>
-            
-            <div class="form-group">
-                <input type="email" name="email" placeholder="correo" required>
             </div>
 
-            <p class="password-requirements">- los requisitos de la contraseña</p>
+            <div class="form-group">
+                <input type="email" name="email" placeholder="Correo electrónico" required>
+            </div>
+
+            <p class="password-requirements">- Los requisitos de la contraseña</p>
 
             <div class="form-row">
-                <div class="form-group half-width">
-                    <input type="password" name="password" placeholder="contraseña" required>
+                <div class="form-group">
+                    <input type="password" name="password" placeholder="Contraseña" required>
                 </div>
-                <div class="form-group half-width">
-                    <input type="password" name="confirm_password" placeholder="confirma contraseña" required>
+                <div class="form-group">
+                    <input type="password" name="confirm_password" placeholder="Confirma contraseña" required>
                 </div>
             </div>
-            
-            <p class="login-link">
-                ¿ya tienes cuenta? <a href="{% url 'guiziapp:login' %}">clic aquí</a>
+
+            <p class="login-info">¿Ya tienes cuenta? <a href="{% url 'guiziapp:login' %}">Haz clic aquí</a>
             </p>
 
             <button type="submit" class="register-btn">ENTRAR</button>
         </form>
 
+        <p class="google-login-separator">O</p>
+
         <a href="#" class="google-login-btn">
             <img src="{% static 'img/imagen-google.png' %}" alt="Google Logo" />
-            
+            Iniciar con Google
         </a>
     </div>
 
-    <div class="right-panel">
-        <img src="{% static 'img/7.png' %}" alt="Iguana"> 
+    <div class="iguana-panel">
+        <img src="{% static 'img/Iguana_Registro1.1.png' %}" alt="Iguana">
     </div>
+
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const select = document.querySelector('select[name="role"]');
+    function updateColor() {
+        select.style.color = select.value === "" ? '#999' : '#333';
+    }
+    updateColor();
+    select.addEventListener('change', updateColor);
+});
+</script>
 {% endblock %}

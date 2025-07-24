@@ -1,0 +1,273 @@
+/* -------------------- ESTILOS GLOBALES SIGNUP 1-------------------- */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    color: #333;
+    overflow-x: hidden;
+    overflow-y: hidden; /* Evita el scroll vertical */  
+}
+
+/* -------------------- CONTENEDOR PRINCIPAL -------------------- */
+.register-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    min-height: 95vh; /* ← CORREGIDO */
+     padding: 1px 50px;  /* Menos espacio arriba */
+    box-sizing: border-box;
+}
+
+/* -------------------- PANEL DEL FORMULARIO -------------------- */
+.main-panel {
+    width: 45%;
+    max-width: 900px;
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+    position: relative;
+    box-sizing: border-box;
+}
+
+/* -------------------- LOGO Y TÍTULOS -------------------- */
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.logo-container img {
+    height: 80px;
+}
+
+.header h2 {
+    font-size: 2em;
+    margin: 0 0 5px;
+    color: #333;
+}
+
+.header p {
+    color: #666;
+    margin: 0 0 20px;
+}
+
+/* -------------------- FORMULARIO -------------------- */
+.form-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    flex: 1;
+    min-width: 120px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    font-size: 1em;
+    background-color: #fff;
+    color: #333;
+}
+
+/* -------------------- SELECT PERSONALIZADO -------------------- */
+.form-group select {
+    color: #999;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%23999' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px 16px;
+    cursor: pointer;
+}
+
+.form-group select:focus {
+    outline: none;
+    border-color: #388e8e;
+}
+
+.form-group select:not([value=""]) {
+    color: #333;
+}
+
+/* -------------------- BOTONES Y ENLACES -------------------- */
+.login-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: right;
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 10px;
+
+    margin-top: 25px;    /* margen superior */
+    margin-right: 30px;  /* margen derecho */
+    margin-bottom: 5px; /* margen inferior */
+    margin-left: 30px;   /* margen izquierdo */
+}
+
+.login-info a {
+    color: #388e8e;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-info a:hover {
+    text-decoration: underline;
+}
+
+button.register-btn {
+    width: 85%;
+    padding: 12px 15px;
+    background-color: #388e8e;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+    text-transform: uppercase;
+
+    transform: translateX(38px); /* ← Aquí se mueve */
+}
+
+button.register-btn:hover {
+    background-color: #2e7a7a;
+}
+
+/* -------------------- BOTÓN GOOGLE -------------------- */
+.google-login-separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0;
+    color: #999;
+}
+
+.google-login-separator::before,
+.google-login-separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #ccc;
+}
+
+.google-login-separator:not(:empty)::before {
+    margin-right: .25em;
+}
+
+.google-login-separator:not(:empty)::after {
+    margin-left: .25em;
+}
+
+.google-login-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60%;
+    padding: 10px 15px;
+    background-color: #f1f1f1;
+    color: #333;
+    border: 1px solid #e9e9e9;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    margin-top: 20px;
+
+    transform: translateX(85px); /* ← Aquí se mueve */
+}
+
+.google-login-btn:hover {
+    background-color: #e6e6e6;
+}
+
+.google-login-btn img {
+    height: 20px;
+    margin-right: 10px;
+}
+
+/* -------------------- IGUANA A LA DERECHA -------------------- */
+.iguana-panel {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* ← sube la imagen */
+    width: 30%;
+    transform: translateY(38px); /* También la sube */      /* ← adicional si quieres más arriba */
+}
+
+.iguana-panel img {
+    height: 665px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* -------------------- RESPONSIVE -------------------- */
+@media (max-width: 900px) {
+    .register-container {
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: 30px;
+    }
+
+    .main-panel {
+        max-width: 90vw;
+        padding: 30px 20px;
+        order: 2;
+    }
+
+    .iguana-panel {
+        order: 1;
+        width: 100%;
+        max-height: 400px;
+        align-items: flex-start;
+        padding-top: 0;
+    }
+
+    .iguana-panel img {
+        height: auto;
+        max-height: 400px;
+        width: 100%;
+        object-fit: contain;
+    }
+
+    .header .logo-container img {
+        height: 60px;
+    }
+}
+
+@media (max-width: 550px) {
+    .form-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .form-row .form-group {
+        margin-bottom: 15px;
+    }
+
+    .iguana-panel {
+        display: none;
+    }
+}

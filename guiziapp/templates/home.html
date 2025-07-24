@@ -3,224 +3,288 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio - Guizi</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Inicio - Guizi</title>
 
-    <!-- Tipografías -->
-    <link href="https://fonts.googleapis.com/css2?family=Jersey+15&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+  <!-- Tipografías -->
+  <link href="https://fonts.googleapis.com/css2?family=Jersey+15&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet" />
 
-    <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Lato', sans-serif;
-        }
+  <style>
+    /* Global */
+    html, body {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Lato', sans-serif;
+      background-color: #fff;
+      color: #135352;
+    }
 
-        h2 {
-            font-family: 'Jersey 15', sans-serif;
-        }
+    h2 {
+      font-family: 'Jersey 15', sans-serif;
+    }
 
-        p, span, a, button {
-            font-family: 'Lato', sans-serif;
-        }
+    p, span, a, button {
+      font-family: 'Lato', sans-serif;
+    }
 
-        .section-green {
-            background-color: #135352;
-            padding: 1rem;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-around;
-            align-items: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-            position: relative; 
-        }
+    /* Circulos base */
+    .circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      position: absolute;
+      opacity: 1;
+      z-index: 0;
+      transform: translate(-50%, -50%);
+    }
 
-        .circle {
-            position: absolute;
-            top: 98%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 120px;
-            height: 120px;
-            background-color: #135352;
-            border-radius: 50%;
-            z-index: 0;
-        }
+  
 
-        .section-green h2 {
-            font-family: 'Jersey 15', sans-serif;
-            font-size: 65px; 
-            color: white;
-        }
+    .circle-white {
+      background-color: #135352;
+      top: 0%;
+      left: 50%;
+    }
 
-        .section-white {
-            background-color: #f9f9f9;
-            color: #135352;
-            padding: 2rem;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-            font-size: 0.9rem;
-        }
+    .circle-icons {
+      background-color: #135352;
+      top: 0%;
+      left: 50%;
+    }
 
-        .section-icons {
-            background-color: #135352;
-            color: white;
-            padding: 2rem;
-            text-align: center;
-        }
+    .circle-footer {
+      background-color: #135352;
+      bottom: 0%;
+      left: 50%;
+    }
 
-        .icons {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 1rem;
-            flex-wrap: wrap;
-        }
+    /* Secciones */
+    .section-green,
+    .section-white,
+    .section-icons {
+      position: relative;
+      padding: 2rem 1rem;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
 
-        .icon-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-weight: 600;
-            color: white;
-        }
+    .section-green {
+      background-color: #135352;
+      color: white;
+    }
 
-        .icon-item img {
-            max-width: 100px;
-            height: auto;
-        }
+    .section-green h2 {
+      font-size: 65px;
+      margin: 0;
+    }
 
-        button.comenzar,
-        a.comenzar {
-            background-color: #f58634;
-            border: none;
-            color: white;
-            padding: 0.5rem 1.5rem;
-            font-weight: 700;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 1rem;
-            font-family: 'Lato', sans-serif;
-        }
+    .section-white {
+      background-color: #f9f9f9;
+      color: #135352;
+      font-size: 0.9rem;
+    }
 
-        .img-large {
-            max-width: 480px;
-            height: auto;
-            margin-top: 2rem;
-        }
+    .section-white h2 {
+      margin-top: 0;
+      font-size: 50px;
+    }
 
-        .guizi-text {
-            max-width: 500px;
-        }
+    .section-icons {
+      background-color: #135352;
+      color: white;
+      flex-direction: column;
+      text-align: center;
+      padding: 3rem 1rem;
+    }
 
-        .guizi-text h2 {
-            font-size: 65px;
-            font-weight: bold;
-            margin-bottom: 1rem;
-        }
+    .section-icons h2 {
+      font-size: 50px;
+      margin-bottom: 2rem;
+    }
 
-        .guizi-text p {
-            font-size: 18px;
-            line-height: 1.6;
-            white-space: normal;
-        }
+    .icons {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+    }
 
-        h2.empezar {
-            color: #1E6C6A;
-            font-size: 40px;
-        }
+    .icon-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-weight: 600;
+      color: white;
+    }
 
-        /* Responsive */
-        @media screen and (max-width: 768px) {
-            .section-white {
-                flex-direction: column;
-                text-align: center;
-            }
+    .icon-item img {
+      max-width: 250px;
+      height: auto;
+    }
 
-            .guizi-img, .guizi-text {
-                width: 100%;
-            }
+    /* Textos en secciones */
+    .guizi-text, .hero-text, .hero-img, .guizi-img {
+      position: relative;
+      z-index: 1;
+    }
 
-            .img-large {
-                max-width: 90%;
-                margin: 1rem auto;
-            }
-        }
-    </style>
+    .guizi-text {
+      max-width: 500px;
+    }
+
+    .guizi-text p {
+      font-size: 18px;
+      line-height: 1.6;
+      white-space: normal;
+    }
+
+    /* Imagenes grandes */
+    .img-large {
+      max-width: 780px;
+      height: auto;
+      margin-top: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Botón comenzar */
+    button.comenzar,
+    a.comenzar {
+      background-color: #f58634;
+      border: none;
+      color: white;
+      padding: 0.8rem 1.5rem;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 15px;
+      font-size: 1rem;
+      font-family: 'Lato', sans-serif;
+      text-decoration: none;
+      display: inline-block;
+      min-width: 120px;
+      text-align: center;
+      transition: background-color 0.3s ease;
+      margin-top: 1rem;
+    }
+
+    a.comenzar:hover,
+    button.comenzar:hover {
+      background-color: #d26900;
+    }
+
+    /* Texto empezar */
+    h2.empezar {
+      color: #1E6C6A;
+      font-size: 40px;
+      margin-top: 1rem;
+    }
+
+    /* Contenedor final */
+    .final-section {
+      text-align: center;
+      margin: 3rem 1rem;
+      position: relative;
+    }
+
+    /* Responsive */
+    @media screen and (max-width: 768px) {
+      .section-green,
+      .section-white {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .guizi-img, .guizi-text, .hero-img, .hero-text {
+        width: 100%;
+      }
+
+      .img-large {
+        max-width: 90%;
+        margin: 1rem auto;
+      }
+
+      .icons {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
-    {% include 'partials/header.html' %}
+  {% include 'partials/header.html' %}
 
-    <section class="section-green">
-        <div class="circle"></div>
-        <div class="hero-img">
-            <img src="{% static 'img/5.png' %}" alt="Iguana cool" class="img-large" />
-        </div>
-        <div class="hero-text">
-            <h2>
-                Aprende<br />
-                jugando<br />
-                con Guizi
-            </h2>
-        </div>
-    </section>
+  <!-- SECCIÓN VERDE -->
+  <section class="section-green">
+    <div class="circle circle-green"></div>
+    <div class="hero-img">
+      <img src="{% static 'img/5.1.png' %}" alt="Iguana cool" class="img-large" />
+    </div>
+    <div class="hero-text">
+      <h2>
+        Aprende<br />
+        jugando<br />
+        con Guizi
+      </h2>
+    </div>
+  </section>
 
-    <section class="section-white">
-        <div class="guizi-text">
-            <h2>¿Qué es Guizi?</h2>
-            <p>
-                Guizi es una plataforma de aprendizaje<br>
-                donde puedes crear preguntas tipo trivia,<br>
-                competir con otros<br>
-                y reforzar tu conocimiento jugando.
-            </p>
-        </div>
-        <div class="guizi-img">
-            <img src="{% static 'img/6.png' %}" alt="¿Qué es Guizi?" class="img-large" />
-        </div>
-    </section>
+  <!-- SECCIÓN BLANCA -->
+  <section class="section-white">
+    <div class="circle circle-white"></div>
+    <div class="guizi-text">
+      <h2>¿Qué es Guizi?</h2>
+      <p>
+        Guizi es una plataforma de aprendizaje<br />
+        donde puedes crear preguntas tipo trivia,<br />
+        competir con otros<br />
+        y reforzar tu conocimiento jugando.
+      </p>
+    </div>
+    <div class="guizi-img">
+      <img src="{% static 'img/6.png' %}" alt="¿Qué es Guizi?" class="img-large" />
+    </div>
+  </section>
 
-    <section class="section-icons">
-        <h2>¿Quién puede usar Guizi?</h2>
-        <div class="icons">
-            <div class="icon-item">
-                <img src="{% static 'img/3.png' %}" alt="Estudiantes" />
-                <span>Estudiantes</span>
-            </div>
-            <div class="icon-item">
-                <img src="{% static 'img/2.png' %}" alt="Profesores" />
-                <span>Profesores</span>
-            </div>
-            <div class="icon-item">
-                <img src="{% static 'img/4.png' %}" alt="Curiosos" />
-                <span>Curiosos</span>
-            </div>
-        </div>
-    </section>
+  <!-- SECCIÓN ÍCONOS -->
+  <section class="section-icons">
+    <div class="circle circle-icons"></div>
+    <h2>¿Quién puede usar Guizi?</h2>
+    <div class="icons">
+      <div class="icon-item">
+        <img src="{% static 'img/3.png' %}" alt="Estudiantes" />
+        <span>Estudiantes</span>
+      </div>
+      <div class="icon-item">
+        <img src="{% static 'img/2.png' %}" alt="Profesores" />
+        <span>Profesores</span>
+      </div>
+      <div class="icon-item">
+        <img src="{% static 'img/4.png' %}" alt="Curiosos" />
+        <span>Curiosos</span>
+      </div>
+    </div>
+  </section>
 
-    <div style="text-align: center; margin-top: 1rem;">
+  <!-- SECCIÓN FINAL -->
+  <div class="final-section">
+    <div class="circle-footer"></div>
     <h2 class="empezar">Empieza a jugar ahora.</h2>
-    <a href="{% url 'guiziapp:lista_actividades' %}" class="comenzar" style="
-        padding: 0.8rem 1.5rem;
-        border-radius: 15px;
-        border: none;
-        cursor: pointer;
-        font-weight: bold;
-        min-width: 120px;
-        text-align: center;
-        text-decoration: none;
-        background-color: #f58634;
-        color: white;
-        display: inline-block;
-    ">¡Comenzar!</a>
+    <a href="{% url 'guiziapp:lista_actividades' %}" class="comenzar">¡Comenzar!</a>
+  </div>
+
+  {% include 'partials/footer.html' %}
+  
+
 
 </body>
 </html>

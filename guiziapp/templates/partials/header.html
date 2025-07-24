@@ -1,17 +1,48 @@
 {% load static %} 
 
-<header style="background-color: #388e3c; padding: 10px 0; margin: 0;">
+<header style="background-color: #1E6C6A; padding: 10px 0; margin: 0;">
   <div style="max-width: 1200px; margin: auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px;">
+    
+    <!-- LOGO -->
     <div class="logo" style="display: flex; align-items: center; color: white;">
-      <img src="{% static 'img/logo.png' %}" alt="Logo" style="height: 40px; margin-right: 10px;">
-      <h1 style="margin: 0; font-size: 1.5em;">GUIZI</h1>
+      <img src="{% static 'img/GUISI-LOGO-WHT.png' %}" alt="Logo" style="height: 40px; margin-right: 10px;">
+  
     </div>
-    <nav>
-      <a href="{% url 'guiziapp:home' %}" style="color: white; margin-right: 15px; text-decoration: none;">Inicio</a>
-      <a href="{% url 'guiziapp:login' %}" style="color: white; margin-right: 15px; text-decoration: none;">Iniciar sesión</a>
-      <a href="{% url 'guiziapp:signup' %}" style="color: white; text-decoration: none;">Registro</a> {# Usamos 'signup' ya que es el nombre en tu urls.py #}
-      {# Si tienes un botón de logout que quieres mostrar condicionalmente #}
-      {# <a href="{% url 'guiziapp:logout' %}" style="color: white; text-decoration: none;">Cerrar Sesión</a> #}
+
+    <!-- NAVEGACIÓN -->
+    <nav style="display: flex; align-items: center; gap: 15px;">
+      <a href="{% url 'guiziapp:home' %}" style="color: white; text-decoration: none;">Inicio</a>
+
+      <!-- BOTÓN INICIAR SESIÓN -->
+      <button onclick="location.href='{% url 'guiziapp:login' %}'" style="
+        background-color: #f0f0f0;
+        color: #388e3c;
+        border: 2px solid #f0f0f0;
+        padding: 6px 15px;
+        border-radius: 4px;
+        font-weight: bold;
+        cursor: pointer;
+      "
+      onmouseover="this.style.backgroundColor='#d9d9d9'; this.style.borderColor='#d9d9d9';"
+      onmouseout="this.style.backgroundColor='#f0f0f0'; this.style.borderColor='#f0f0f0';">
+        Iniciar sesión
+      </button>
+
+      <!-- BOTÓN REGISTRO -->
+      <button onclick="location.href='{% url 'guiziapp:signup' %}'" style="
+        background-color: #ed8910;
+        color: white;
+        border: 2px solid #ed8910;
+        padding: 6px 15px;
+        border-radius: 4px;
+        font-weight: bold;
+        cursor: pointer;
+      "
+      onmouseover="this.style.backgroundColor='#c6720d'; this.style.borderColor='#c6720d';"
+      onmouseout="this.style.backgroundColor='#ed8910'; this.style.borderColor='#ed8910';">
+        Registro
+      </button>
     </nav>
+
   </div>
 </header>

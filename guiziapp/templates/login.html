@@ -4,42 +4,57 @@
 {% block title %}Iniciar sesión - GUIZI{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/login.css' %}">
+<link rel="stylesheet" href="{% static 'css/login_1.css' %}">
 {% endblock %}
 
 {% block content %}
-<!-- Ya no hay login-container. Directo al body con dos paneles -->
-<div class="left-panel">
-    <div class="logo">
-        <img src="{% static 'img/logo.png' %}" alt="Guizi Logo">
-        <h1>GUIZI</h1>
-    </div>
-    <h2>Iniciar sesión</h2>
-    <p>Introduce tus datos</p>
+<div class="register-container">
+    <!-- Columna izquierda: Formulario -->
+    <div class="left-panel">
+        <div class="logo-container">
+            <img src="{% static 'img/GUISI-LOGO.png' %}" alt="Guizi Logo" />
+        </div>
 
-    <form method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            <input type="email" name="username" placeholder="Correo" required>
+        <div class="header">
+            <h2>Iniciar sesión</h2>
+            <p>Introduce tus datos</p>
         </div>
-        <div class="form-group">
-            <input type="password" name="password" placeholder="Contraseña" required>
-        </div>
-        <div class="forgot-password">
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="email">Correo electrónico</label>
+                <input type="email" id="email" name="email" placeholder="Correo electrónico" autocomplete="email" required />
+            </div>
+
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" placeholder="Contraseña" autocomplete="current-password" required />
+            </div>
+
+            <button type="submit" class="register-btn">ENTRAR</button>
+        </form>
+
+        <p class="login-info center-text">
             <a href="#">¿Olvidaste tu contraseña?</a>
-        </div>
-        <button type="submit">ENTRAR</button>
-    </form>
+        </p>
 
-    <p class="register-link">¿No tienes cuenta? <a href="{% url 'guiziapp:signup' %}">Regístrate aquí</a></p>
+        <p class="login-link center-text">
+            ¿No tienes cuenta? <a href="{% url 'guiziapp:signup' %}">Regístrate aquí</a>
+        </p>
 
-    <a href="#" class="google-login-btn">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google Logo" />
-        Inicia sesión con Google
-    </a>
-</div>
+        <div class="divider">o</div>
 
-<div class="right-panel">
-    <img src="{% static 'img/1.png' %}" alt="Iguana">
+        <a href="#" class="google-login-btn">
+            <img src="{% static 'img/imagen-google.png' %}" alt="Google Logo" />
+            Iniciar con Google
+        </a>
+    </div>
+
+    <!-- Columna derecha: Imagen -->
+    <div class="iguana2-panel">
+        <img src="{% static 'img/Iguana_Login2.png' %}" alt="Iguana decorativa" />
+    </div>
 </div>
 {% endblock %}
