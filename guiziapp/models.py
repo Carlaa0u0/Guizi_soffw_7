@@ -11,3 +11,11 @@ class Actividad(models.Model):
         return self.nombre
 
 # Create your models here.
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    role = models.CharField(max_length=20)
+    age = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f"{self.user.username} Profile"

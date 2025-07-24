@@ -18,9 +18,17 @@
         <div class="header">
             <h2>Iniciar sesión</h2>
             <p>Introduce tus datos</p>
+
+            {% if messages %}
+                <div class="messages center-text">
+                    {% for message in messages %}
+                        <p class="{{ message.tags }}">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
         </div>
 
-        <form method="post" novalidate>
+        <form method="post" action="{% url 'guiziapp:login' %}" novalidate>
             {% csrf_token %}
             
             <div class="form-group">
@@ -44,17 +52,12 @@
             ¿No tienes cuenta? <a href="{% url 'guiziapp:signup' %}">Regístrate aquí</a>
         </p>
 
-        <div class="divider">o</div>
-
-        <a href="#" class="google-login-btn">
-            <img src="{% static 'img/imagen-google.png' %}" alt="Google Logo" />
-            Iniciar con Google
-        </a>
-    </div>
+        
+    </div> <!-- ← cierre de left-panel -->
 
     <!-- Columna derecha: Imagen -->
     <div class="iguana2-panel">
         <img src="{% static 'img/Iguana_Login2.png' %}" alt="Iguana decorativa" />
     </div>
-</div>
+</div> <!-- ← cierre correcto de register-container -->
 {% endblock %}

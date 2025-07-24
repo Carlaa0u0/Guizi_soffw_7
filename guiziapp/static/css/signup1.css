@@ -156,57 +156,6 @@ button.register-btn:hover {
     background-color: #2e7a7a;
 }
 
-/* -------------------- BOTÓN GOOGLE -------------------- */
-.google-login-separator {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    margin: 20px 0;
-    color: #999;
-}
-
-.google-login-separator::before,
-.google-login-separator::after {
-    content: '';
-    flex: 1;
-    border-bottom: 1px solid #ccc;
-}
-
-.google-login-separator:not(:empty)::before {
-    margin-right: .25em;
-}
-
-.google-login-separator:not(:empty)::after {
-    margin-left: .25em;
-}
-
-.google-login-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 60%;
-    padding: 10px 15px;
-    background-color: #f1f1f1;
-    color: #333;
-    border: 1px solid #e9e9e9;
-    border-radius: 5px;
-    font-size: 1em;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    text-decoration: none;
-    margin-top: 20px;
-
-    transform: translateX(85px); /* ← Aquí se mueve */
-}
-
-.google-login-btn:hover {
-    background-color: #e6e6e6;
-}
-
-.google-login-btn img {
-    height: 20px;
-    margin-right: 10px;
-}
 
 /* -------------------- IGUANA A LA DERECHA -------------------- */
 .iguana-panel {

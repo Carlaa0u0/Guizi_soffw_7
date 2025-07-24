@@ -16,7 +16,7 @@ html, body {
     justify-content: space-between;
     align-items: flex-start;
     min-height: 95vh; /* ← CORREGIDO */
-     padding: 1px 50px;  /* Menos espacio arriba */
+     padding: 50px 50px 10px 50px;  /* Menos espacio arriba */
     box-sizing: border-box;
 }
 
@@ -28,7 +28,7 @@ html, body {
     flex-direction: column;
     justify-content: center;
     box-sizing: border-box;
-    background-color: #f9f9f9;
+    background-color: #ffffff;
 }
 
 .logo-container {
@@ -134,62 +134,6 @@ form {
     text-align: center !important;
 }
 
-/* -------------------- BOTÓN DE GOOGLE -------------------- */
-.google-login-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 60%;
-    padding: 10px 15px;
-    background-color: #f1f1f1;
-    color: #333;
-    border: 1px solid #e9e9e9;
-    border-radius: 5px;
-    font-size: 1em;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    text-decoration: none;
-    margin-top: 20px;
-
-    transform: translateX(85px); /* ← Aquí se mueve */
-}
-
-.google-login-btn img {
-    height: 20px;
-    margin-right: 10px;
-}
-
-.google-login-btn:hover {
-    background-color: #e0e0e0;
-}
-
-/* -------------------- DIVISOR -------------------- */
-.divider {
-    text-align: center;
-    margin: 25px 0 15px;
-    color: #888;
-    font-size: 0.9em;
-    font-weight: 500;
-    position: relative;
-}
-
-.divider::before,
-.divider::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    width: 40%;
-    height: 1px;
-    background: #ccc;
-}
-
-.divider::before {
-    left: 0;
-}
-
-.divider::after {
-    right: 0;
-}
 
 /* -------------------- PANEL DERECHO: IMAGEN -------------------- */
 .iguana2-panel {
@@ -197,7 +141,7 @@ form {
     justify-content: center;
     align-items: flex-start; /* ← sube la imagen */
     width: 32%;
-    transform: translateY(38px); /* También la sube */      /* ← adicional si quieres más arriba */
+    transform: translateY(15px); /* También la sube */      /* ← adicional si quieres más arriba */
 }
 
 .iguana2-panel img {
@@ -228,3 +172,20 @@ form {
         max-width: 120px;
     }
 }
+
+.messages {
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+.messages .success {
+    background-color: #d4edda;
+    color: #155724;
+}
+.messages .error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+

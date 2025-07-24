@@ -3,6 +3,7 @@ from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from django.urls import path
 from . import views 
+from django.contrib.auth.views import LogoutView
 
 
 app_name = 'guiziapp'
@@ -17,5 +18,5 @@ urlpatterns = [
     
     path('signup/', views.signup_view, name='signup'),
     path('login/', views.login_view, name='login'),  # Tu vista personalizada
-    path('logout/', views.logout_view, name='logout'),  # También puedes personalizar logout
+     path('logout/', LogoutView.as_view(next_page='guiziapp:home'), name='logout'),
 ]

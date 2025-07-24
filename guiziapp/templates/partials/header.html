@@ -1,4 +1,4 @@
-{% load static %} 
+{% load static %}
 
 <header style="background-color: #1E6C6A; padding: 10px 0; margin: 0;">
   <div style="max-width: 1200px; margin: auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px;">
@@ -6,42 +6,67 @@
     <!-- LOGO -->
     <div class="logo" style="display: flex; align-items: center; color: white;">
       <img src="{% static 'img/GUISI-LOGO-WHT.png' %}" alt="Logo" style="height: 40px; margin-right: 10px;">
-  
     </div>
 
     <!-- NAVEGACIÓN -->
     <nav style="display: flex; align-items: center; gap: 15px;">
       <a href="{% url 'guiziapp:home' %}" style="color: white; text-decoration: none;">Inicio</a>
 
-      <!-- BOTÓN INICIAR SESIÓN -->
-      <button onclick="location.href='{% url 'guiziapp:login' %}'" style="
-        background-color: #f0f0f0;
-        color: #388e3c;
-        border: 2px solid #f0f0f0;
-        padding: 6px 15px;
-        border-radius: 4px;
-        font-weight: bold;
-        cursor: pointer;
-      "
-      onmouseover="this.style.backgroundColor='#d9d9d9'; this.style.borderColor='#d9d9d9';"
-      onmouseout="this.style.backgroundColor='#f0f0f0'; this.style.borderColor='#f0f0f0';">
-        Iniciar sesión
-      </button>
+      {% if user.is_authenticated %}
+        <!-- BOTÓN CERRAR SESIÓN -->
+        <form method="POST" action="{% url 'guiziapp:logout' %}" style="margin: 0;">
+          {% csrf_token %}
+          <button type="submit" style="
+            background-color: #ed8910;
+            color: white;
+            border: 2px solid #ed8910;
+            padding: 6px 15px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+          "
+          onmouseover="this.style.backgroundColor='#c6720d'; this.style.borderColor='#c6720d';"
+          onmouseout="this.style.backgroundColor='#ed8910'; this.style.borderColor='#ed8910';">
+            Cerrar sesión
+          </button>
+        </form>
+      {% else %}
+        <!-- BOTÓN INICIAR SESIÓN -->
+        <button onclick="location.href='{% url 'guiziapp:login' %}'" style="
+          background-color: #f0f0f0;
+          color: #388e3c;
+          border: 2px solid #f0f0f0;
+          padding: 6px 15px;
+          border-radius: 4px;
+          font-weight: bold;
+          cursor: pointer;
+          font-family: inherit;
+          transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+        "
+        onmouseover="this.style.backgroundColor='#d9d9d9'; this.style.borderColor='#d9d9d9';"
+        onmouseout="this.style.backgroundColor='#f0f0f0'; this.style.borderColor='#f0f0f0';">
+          Iniciar sesión
+        </button>
 
-      <!-- BOTÓN REGISTRO -->
-      <button onclick="location.href='{% url 'guiziapp:signup' %}'" style="
-        background-color: #ed8910;
-        color: white;
-        border: 2px solid #ed8910;
-        padding: 6px 15px;
-        border-radius: 4px;
-        font-weight: bold;
-        cursor: pointer;
-      "
-      onmouseover="this.style.backgroundColor='#c6720d'; this.style.borderColor='#c6720d';"
-      onmouseout="this.style.backgroundColor='#ed8910'; this.style.borderColor='#ed8910';">
-        Registro
-      </button>
+        <!-- BOTÓN REGISTRO -->
+        <button onclick="location.href='{% url 'guiziapp:signup' %}'" style="
+          background-color: #ed8910;
+          color: white;
+          border: 2px solid #ed8910;
+          padding: 6px 15px;
+          border-radius: 4px;
+          font-weight: bold;
+          cursor: pointer;
+          font-family: inherit;
+          transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+        "
+        onmouseover="this.style.backgroundColor='#c6720d'; this.style.borderColor='#c6720d';"
+        onmouseout="this.style.backgroundColor='#ed8910'; this.style.borderColor='#ed8910';">
+          Registro
+        </button>
+      {% endif %}
     </nav>
 
   </div>

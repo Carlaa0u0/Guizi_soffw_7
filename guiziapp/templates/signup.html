@@ -7,7 +7,6 @@
 <link rel="stylesheet" href="{% static 'css/signup1.css' %}">
 {% endblock %}
 
-
 {% block content %}
 <div class="register-container">
 
@@ -25,54 +24,88 @@
 
             <div class="form-row">
                 <div class="form-group">
-                    <input type="text" name="first_name" placeholder="Nombre" required>
+                    {{ form.first_name.label_tag }}
+                    {{ form.first_name }}
+                    {% for error in form.first_name.errors %}
+                        <p class="error">{{ error }}</p>
+                    {% endfor %}
                 </div>
                 <div class="form-group">
-                    <input type="text" name="last_name" placeholder="Apellido" required>
+                    {{ form.last_name.label_tag }}
+                    {{ form.last_name }}
+                    {% for error in form.last_name.errors %}
+                        <p class="error">{{ error }}</p>
+                    {% endfor %}
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
-                    <select name="role" required>
-                        <option value="" disabled selected>Seleccione su rol</option>
-                        <option value="Profesor">Profesor</option>
-                        <option value="Estudiante">Estudiante</option>
-                    </select>
+                    {{ form.role.label_tag }}
+                    {{ form.role }}
+                    {% for error in form.role.errors %}
+                        <p class="error">{{ error }}</p>
+                    {% endfor %}
                 </div>
                 <div class="form-group">
-                    <input type="number" name="age" placeholder="Edad" required>
+                    {{ form.age.label_tag }}
+                    {{ form.age }}
+                    {% for error in form.age.errors %}
+                        <p class="error">{{ error }}</p>
+                    {% endfor %}
                 </div>
             </div>
 
             <div class="form-group">
-                <input type="email" name="email" placeholder="Correo electrónico" required>
+                {{ form.email.label_tag }}
+                {{ form.email }}
+                {% for error in form.email.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
             </div>
 
             <p class="password-requirements">- Los requisitos de la contraseña</p>
 
             <div class="form-row">
                 <div class="form-group">
-                    <input type="password" name="password" placeholder="Contraseña" required>
+                    {{ form.password1.label_tag }}
+                    {{ form.password1 }}
+                    {% for error in form.password1.errors %}
+                        <p class="error">{{ error }}</p>
+                    {% endfor %}
                 </div>
                 <div class="form-group">
-                    <input type="password" name="confirm_password" placeholder="Confirma contraseña" required>
+                    {{ form.password2.label_tag }}
+                    {{ form.password2 }}
+                    {% for error in form.password2.errors %}
+                        <p class="error">{{ error }}</p>
+                    {% endfor %}
                 </div>
             </div>
 
-            <p class="login-info">¿Ya tienes cuenta? <a href="{% url 'guiziapp:login' %}">Haz clic aquí</a>
+            {% if form.non_field_errors %}
+            <div class="error">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <p class="login-info">
+                ¿Ya tienes cuenta? <a href="{% url 'guiziapp:login' %}">Haz clic aquí</a>
             </p>
 
             <button type="submit" class="register-btn">ENTRAR</button>
         </form>
 
-        <p class="google-login-separator">O</p>
-
-        <a href="#" class="google-login-btn">
-            <img src="{% static 'img/imagen-google.png' %}" alt="Google Logo" />
-            Iniciar con Google
-        </a>
-    </div>
+        {% if messages %}
+            <div class="messages center-text">
+                {% for message in messages %}
+                    <p class="{{ message.tags }}">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div> <!-- cierre de main-panel -->
 
     <div class="iguana-panel">
         <img src="{% static 'img/Iguana_Registro1.1.png' %}" alt="Iguana">
@@ -86,8 +119,10 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateColor() {
         select.style.color = select.value === "" ? '#999' : '#333';
     }
-    updateColor();
-    select.addEventListener('change', updateColor);
+    if(select) {
+        updateColor();
+        select.addEventListener('change', updateColor);
+    }
 });
 </script>
 {% endblock %}

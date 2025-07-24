@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
     'guiziapp',
+
 ]
 
 MIDDLEWARE = [
@@ -131,3 +133,9 @@ STATICFILES_DIRS = [
 
 
 LOGIN_URL = '/login/'
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+  
