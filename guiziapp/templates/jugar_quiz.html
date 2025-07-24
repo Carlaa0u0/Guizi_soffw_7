@@ -1,0 +1,443 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ quiz.titulo }} - Pregunta {{ pregunta_numero }} de {{ total_preguntas }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+15&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Lato', sans-serif;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 100vh;
+            background: url('{% static "img/utp.jpg" %}') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+            overflow: hidden;
+        }
+        body::before { /* Overlay para oscurecer la imagen de fondo */
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5); /* Ajusta la opacidad (0.5 es 50%) */
+            z-index: -1;
+        }
+        .top-bar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: rgba(0, 0, 0, 0.4);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+        }
+        .question-counter {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #fff;
+        }
+        .logo-placeholder {
+            width: 50px;
+            height: 50px;
+            background-color: #f58634; /* Color de tu logo */
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Jersey 15', sans-serif;
+            font-size: 1.5em;
+        }
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 90%;
+            max-width: 900px;
+            margin: auto;
+            z-index: 5;
+        }
+        .question-box {
+            background-color: white;
+            color: #333;
+            border-radius: 15px;
+            padding: 30px 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            box-sizing: border-box;
+            position: relative;
+        }
+        .question-text {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .question-image {
+            max-width: 80%;
+            max-height: 300px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            object-fit: contain;
+        }
+        .timer-display { /* Círculo con el tiempo restante */
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #1E6C6A;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Jersey 15', sans-serif;
+            font-size: 2.5em;
+            color: white;
+            box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.3);
+            z-index: 11;
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            width: 100%;
+        }
+        .option-button {
+            height: 120px;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 1.5em;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding-left: 30px;
+            position: relative;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .option-button:hover:not(.disabled) {
+            filter: brightness(1.1);
+            transform: translateY(-3px);
+        }
+        .option-button.red { background-color: #EF4444; }
+        .option-button.blue { background-color: #3B82F6; }
+        .option-button.yellow { background-color: #FBBF24; }
+        .option-button.green { background-color: #22C55E; }
+
+        /* Iconos de las opciones */
+        .option-button::before {
+            content: '';
+            width: 0;
+            height: 0;
+            border-style: solid;
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            margin-right: 15px;
+        }
+        .option-button.red::before {
+            border-width: 15px 0 15px 25px;
+            border-color: transparent transparent transparent white;
+            transform: translateY(-50%) rotate(90deg); /* Triángulo */
+        }
+        .option-button.blue::before {
+            border-width: 15px;
+            border-color: white transparent white transparent;
+            transform: translateY(-50%) rotate(45deg); /* Diamante (cuadrado rotado) */
+        }
+        .option-button.yellow::before {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background-color: white;
+            border: none;
+            transform: translateY(-50%); /* Círculo */
+        }
+        .option-button.green::before {
+            width: 25px;
+            height: 25px;
+            background-color: white;
+            border: none;
+            transform: translateY(-50%); /* Cuadrado */
+        }
+
+        .bottom-bar {
+            width: 100%;
+            height: 30px; /* Altura de la barra de tiempo */
+            background-color: #4B0082; /* Color morado oscuro */
+            position: relative;
+            z-index: 10;
+        }
+        .time-progress-bar {
+            height: 100%;
+            background-color: #8A2BE2; /* Morado más claro */
+            width: 100%; /* Inicialmente al 100% */
+            transition: width linear;
+        }
+        .option-button.selected {
+            border: 5px solid white;
+            filter: brightness(1.2);
+        }
+        .option-button.disabled {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        .correct-answer {
+            background-color: #22C55E !important;
+            box-shadow: 0 0 20px 5px #22C55E;
+        }
+        .incorrect-answer {
+            background-color: #EF4444 !important;
+            box-shadow: 0 0 20px 5px #EF4444;
+        }
+        .puntaje-feedback {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3em;
+            font-weight: bold;
+            color: yellow;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            animation: fadeOutUp 1.5s forwards;
+            z-index: 20;
+            display: none;
+        }
+
+        @keyframes fadeOutUp {
+            0% { opacity: 1; transform: translate(-50%, -50%); }
+            100% { opacity: 0; transform: translate(-50%, -150%); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .question-counter {
+                font-size: 1.5em;
+            }
+            .question-text {
+                font-size: 1.5em;
+                padding: 15px;
+            }
+            .timer-display {
+                width: 60px;
+                height: 60px;
+                font-size: 2em;
+                box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.3);
+            }
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            .option-button {
+                height: 80px;
+                font-size: 1.2em;
+                padding-left: 20px;
+            }
+            .option-button::before {
+                left: 5px;
+            }
+            .option-button.red::before,
+            .option-button.blue::before,
+            .option-button.yellow::before,
+            .option-button.green::before {
+                width: 20px;
+                height: 20px;
+                border-width: 12px 0 12px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <span class="question-counter">{{ pregunta_numero }} de {{ total_preguntas }}</span>
+        <div class="logo-placeholder">G</div> {# Placeholder para tu logo GUIZI #}
+        <div></div> {# Espacio para alinear si se añade algo a la derecha #}
+    </div>
+
+    <div class="main-content">
+        <div class="question-box">
+            <div class="timer-display" id="timer-display">{{ tiempo_limite_pregunta }}</div>
+            <p class="question-text">{{ pregunta.texto_pregunta }}</p>
+            {% if pregunta.imagen_pregunta %}
+                <img src="{{ pregunta.imagen_pregunta.url }}" alt="Imagen de la pregunta" class="question-image">
+            {% endif %}
+        </div>
+
+        <div class="options-grid" id="options-grid">
+            {# Para asignar colores dinámicamente a los botones #}
+            {% comment %}
+            El `forloop.counter` en Django templates es 1-indexed.
+            Usaremos clases CSS predefinidas para los colores: red, blue, yellow, green.
+            Las asignamos en un ciclo para que se repitan los colores cada 4 opciones.
+            {% endcomment %}
+            {% for opcion in opciones %}
+                {% if forloop.counter0 == 0 %}
+                    <button class="option-button red"
+                {% elif forloop.counter0 == 1 %}
+                    <button class="option-button blue"
+                {% elif forloop.counter0 == 2 %}
+                    <button class="option-button yellow"
+                {% else %} {# forloop.counter0 == 3 #}
+                    <button class="option-button green"
+                {% endif %}
+                        data-option-id="{{ opcion.id }}"
+                        data-is-correct="{{ opcion.es_correcta|yesno:'true,false' }}">
+                    {{ opcion.texto_opcion }}
+                </button>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="bottom-bar">
+        <div class="time-progress-bar" id="time-progress-bar"></div>
+    </div>
+
+    <div class="puntaje-feedback" id="puntaje-feedback"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> {# jQuery para facilitar AJAX #}
+    <script>
+        const timerDisplay = document.getElementById('timer-display');
+        const progressBar = document.getElementById('time-progress-bar');
+        const optionsGrid = document.getElementById('options-grid');
+        const puntajeFeedback = document.getElementById('puntaje-feedback');
+
+        let timeLeft = {{ tiempo_limite_pregunta }};
+        let timerInterval;
+        let answerSubmitted = false;
+        let startTime; // Para calcular el tiempo de respuesta
+
+        function startTimer() {
+            startTime = Date.now();
+            timerDisplay.textContent = timeLeft;
+            progressBar.style.width = '100%';
+            // Reinicia la transición de la barra de progreso
+            progressBar.style.transition = 'none';
+            progressBar.style.width = '100%';
+            setTimeout(() => {
+                progressBar.style.transition = `width linear ${timeLeft}s`;
+                progressBar.style.width = '0%';
+            }, 50); // Pequeño retraso para que la transición se reinicie
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerDisplay.textContent = timeLeft;
+
+                if (timeLeft <= 0 && !answerSubmitted) {
+                    clearInterval(timerInterval);
+                    submitAnswer(null); // No se seleccionó ninguna opción
+                }
+            }, 1000);
+        }
+
+        function disableOptions() {
+            document.querySelectorAll('.option-button').forEach(button => {
+                button.classList.add('disabled');
+            });
+        }
+
+        function showFeedback(isCorrect, points) {
+            puntajeFeedback.style.display = 'block';
+            if (isCorrect) {
+                puntajeFeedback.textContent = `+${points} Pts`;
+                puntajeFeedback.style.color = 'yellow';
+            } else {
+                puntajeFeedback.textContent = '0 Pts';
+                puntajeFeedback.style.color = 'red';
+            }
+            puntajeFeedback.style.animation = 'none'; // Reset animation
+            void puntajeFeedback.offsetWidth; // Trigger reflow
+            puntajeFeedback.style.animation = 'fadeOutUp 1.5s forwards';
+        }
+
+        function displayCorrectAnswer() {
+            document.querySelectorAll('.option-button').forEach(button => {
+                const isCorrect = button.dataset.isCorrect === 'true';
+                if (isCorrect) {
+                    button.classList.add('correct-answer');
+                } else if (button.classList.contains('selected') && !isCorrect) {
+                    button.classList.add('incorrect-answer');
+                }
+            });
+        }
+
+        function submitAnswer(selectedOptionButton) {
+            if (answerSubmitted) return;
+            answerSubmitted = true;
+            clearInterval(timerInterval);
+            disableOptions();
+
+            const endTime = Date.now();
+            const timeTaken = Math.floor((endTime - startTime) / 1000); // Tiempo en segundos
+
+            let selectedOptionId = null;
+            if (selectedOptionButton) {
+                selectedOptionId = selectedOptionButton.dataset.optionId;
+                selectedOptionButton.classList.add('selected'); // Marcar la opción seleccionada
+            }
+
+            displayCorrectAnswer(); // Mostrar la respuesta correcta y la seleccionada
+
+            // Enviar respuesta al servidor via AJAX
+            $.ajax({
+                url: '{% url "guiziapp:procesar_respuesta_quiz_ajax" %}',
+                type: 'POST',
+                data: {
+                    'intento_quiz_id': {{ intento_quiz_id }},
+                    'pregunta_id': {{ pregunta.id }},
+                    'opcion_seleccionada_id': selectedOptionId,
+                    'tiempo_respuesta_segundos': timeTaken,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    if (response.success) {
+                        showFeedback(response.es_correcta, response.puntaje_obtenido);
+
+                        setTimeout(() => {
+                            if (response.quiz_terminado) {
+                                window.location.href = '{% url "guiziapp:resultados_quiz" intento_quiz_id=intento_quiz_id %}';
+                            } else {
+                                window.location.reload(); // Recargar para la siguiente pregunta
+                            }
+                        }, 2500); // Esperar un poco para que el feedback sea visible
+                    } else {
+                        console.error("Error al procesar respuesta:", response.error);
+                        alert("Hubo un error al procesar tu respuesta. Por favor, inténtalo de nuevo.");
+                        // Opcional: Recargar o redirigir en caso de error grave
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX Error:", status, error);
+                    alert("No se pudo conectar con el servidor para procesar tu respuesta.");
+                }
+            });
+        }
+
+        optionsGrid.addEventListener('click', function(event) {
+            const clickedButton = event.target.closest('.option-button');
+            if (clickedButton && !answerSubmitted) {
+                submitAnswer(clickedButton);
+            }
+        });
+
+        startTimer(); // Iniciar el temporizador al cargar la página
+    </script>
+</body>
+</html>

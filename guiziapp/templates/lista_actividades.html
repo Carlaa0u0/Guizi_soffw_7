@@ -1,82 +1,263 @@
 {% load static %}
-{% include 'partials/header_actividades.html' %}
+{% load dict_extras %}
+{% include 'partials/header_actividades.html' %} {# Asumo que tienes este header #}
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Lista Actividades</title>
+    <title>Categorías y Quizzes - Guizi</title>
 
-    <!-- Enlace al CSS externo -->
     <link rel="stylesheet" href="{% static 'css/card_actividades.css' %}">
+    <style>
+        /* Estilos para las pestañas y el contenedor general (Copiado de tu código) */
+        .content-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #eee;
+            position: relative;
+        }
+
+        .tab-button {
+            background-color: transparent;
+            border: none;
+            padding: 15px 25px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #555;
+            transition: color 0.3s ease;
+        }
+
+        .tab-button.active {
+            color: #f58634; /* Color de pestaña activa */
+        }
+
+        .tab-indicator {
+            position: absolute;
+            bottom: -2px; /* Alineado con el borde inferior de las pestañas */
+            height: 4px;
+            background-color: #f58634; /* Color de la línea */
+            transition: left 0.3s ease, width 0.3s ease;
+            z-index: 1;
+        }
+
+        .activity-grid { /* Renombrado conceptualmente a quiz-grid para quizzes */
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Columnas responsivas */
+            gap: 25px;
+            justify-content: center; /* Centrar las tarjetas */
+            padding-top: 20px;
+        }
+
+        .tab-content {
+            display: none; /* Ocultar por defecto */
+        }
+
+        .tab-content.active {
+            display: flex; /* Mostrar cuando está activo */
+            flex-wrap: wrap; /* Permitir que las tarjetas se envuelvan */
+            justify-content: center; /* Centrar las tarjetas */
+        }
+
+        /* Estilos para la tarjeta de Quiz (card_quiz.html) - puedes mover esto a card_quiz.css */
+        .quiz-card {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 280px; /* Ancho fijo para las tarjetas */
+            height: auto; /* Altura auto para que se ajuste al contenido */
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            margin-bottom: 20px; /* Espacio entre tarjetas */
+        }
+
+        .quiz-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .quiz-card-image {
+            width: 100%;
+            height: 150px; /* Altura fija para la imagen */
+            object-fit: cover;
+            background-color: #ddd; /* Color de fondo si no hay imagen */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #555;
+            font-size: 1.2em;
+        }
+
+        .quiz-card-content {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .quiz-card h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+            color: #1E6C6A;
+        }
+
+        .quiz-card p {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 10px;
+            flex-grow: 1; /* Para que la descripción ocupe espacio disponible */
+        }
+
+        .quiz-card-meta {
+            font-size: 0.8em;
+            color: #888;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .quiz-card-meta span {
+            display: block;
+        }
+
+        /* Estilos para cuando no hay quizzes */
+        .no-quizzes-message {
+            font-size: 18px;
+            color: #555;
+            text-align: center;
+            width: 100%;
+            padding: 30px 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .tabs {
+                flex-wrap: wrap;
+            }
+            .tab-button {
+                flex-basis: 50%; /* Ocupa la mitad del ancho en pantallas pequeñas */
+                box-sizing: border-box;
+            }
+            .activity-grid {
+                grid-template-columns: 1fr; /* Una sola columna en móviles */
+            }
+            .quiz-card {
+                width: 90%; /* Ajustar el ancho de las tarjetas en móviles */
+                max-width: 350px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="content-container">
-        <!-- Pestañas -->
         <div class="tabs">
-            <button class="tab-button active" data-tab="participando">Participando</button>
-            <button class="tab-button" data-tab="creado">Creado por mí</button>
-            <div class="tab-indicator"></div> <!-- Línea amarilla animada -->
-
+            <button class="tab-button active" data-tab="all-quizzes">Todos los Quizzes</button>
+            {% for categoria in categorias %}
+                <button class="tab-button" data-tab="category-{{ categoria.id }}">{{ categoria.nombre }}</button>
+            {% endfor %}
+            <div class="tab-indicator"></div>
         </div>
 
-<!-- Sección PARTICIPANDO -->
-<div class="activity-grid tab-content active" data-tab="participando">
-    {% include 'partials/card_actividades.html' with image_url="https://placehold.co/200x160?text=Ejercicio+1" exercise_name="Ejercicio 1" author_name="Autor A" %}
-    {% include 'partials/card_actividades.html' with image_url="https://placehold.co/200x160?text=Ejercicio+2" exercise_name="Ejercicio 2" author_name="Autor B" %}
-    {% include 'partials/card_actividades.html' with image_url="https://placehold.co/200x160?text=Ejercicio+3" exercise_name="Ejercicio 3" author_name="Autor C" %}
-    {% include 'partials/card_actividades.html' with image_url="https://placehold.co/200x160?text=Ejercicio+4" exercise_name="Ejercicio 4" author_name="Autor D" %}
-</div>
+        {# Contenido para "Todos los Quizzes" #}
+        <div class="activity-grid tab-content active" data-tab="all-quizzes">
+            {% for categoria_nombre, quizzes in quizzes_por_categoria.items %}
+                {% if quizzes %}
+                    {% for quiz in quizzes %}
+                        {% include 'partials/card_quiz.html' with quiz=quiz %}
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+            {# Si no hay quizzes en ninguna categoría #}
+            {% if not quizzes_por_categoria and not quizzes_creados_por_mi %}
+                 <p class="no-quizzes-message">No hay quizzes disponibles en este momento.</p>
+            {% endif %}
+        </div>
 
-<!-- Sección CREADO POR MÍ (sin tarjetas, solo texto) -->
-<div class="activity-grid tab-content" data-tab="creado">
-    <p style="font-size: 18px; color: #555; text-align: center;">No tienes actividades creadas aún.</p>
-</div>
-
-</div>
+        {# Contenido para cada categoría individual #}
+        {% for categoria in categorias %}
+            <div class="activity-grid tab-content" data-tab="category-{{ categoria.id }}">
+                {% with quizzes=quizzes_por_categoria|get_item:categoria.nombre %} {# Necesitará un custom filter get_item #}
+                    {% if quizzes %}
+                        {% for quiz in quizzes %}
+                            {% include 'partials/card_quiz.html' with quiz=quiz %}
+                        {% endfor %}
+                    {% else %}
+                        <p class="no-quizzes-message">No hay quizzes en la categoría "{{ categoria.nombre }}" en este momento.</p>
+                    {% endif %}
+                {% endwith %}
+            </div>
+        {% endfor %}
+    </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    const tabButtons = document.querySelectorAll(".tab-button");
-    const tabContents = document.querySelectorAll(".tab-content");
-    const indicator = document.querySelector(".tab-indicator");
+    document.addEventListener("DOMContentLoaded", function () {
+        const tabButtons = document.querySelectorAll(".tab-button");
+        const tabContents = document.querySelectorAll(".tab-content");
+        const indicator = document.querySelector(".tab-indicator");
 
-    function activateTab(tabName, clickedButton) {
-        tabButtons.forEach(btn => btn.classList.remove("active"));
-        clickedButton.classList.add("active");
+        function activateTab(tabName, clickedButton) {
+            tabButtons.forEach(btn => btn.classList.remove("active"));
+            clickedButton.classList.add("active");
 
-        tabContents.forEach(content => {
-            if (content.dataset.tab === tabName) {
-                content.classList.add("active");
-            } else {
-                content.classList.remove("active");
+            tabContents.forEach(content => {
+                if (content.dataset.tab === tabName) {
+                    content.classList.add("active");
+                } else {
+                    content.classList.remove("active");
+                }
+            });
+
+            const tabRect = clickedButton.getBoundingClientRect();
+            const tabsContainer = clickedButton.parentElement;
+            const containerRect = tabsContainer.getBoundingClientRect();
+            indicator.style.left = (tabRect.left - containerRect.left) + "px";
+            indicator.style.width = tabRect.width + "px";
+        }
+
+        // Initialize indicator position
+        const initialActive = document.querySelector(".tab-button.active");
+        if (initialActive) {
+            activateTab(initialActive.dataset.tab, initialActive);
+        }
+
+        tabButtons.forEach(button => {
+            button.addEventListener("click", () => {
+                activateTab(button.dataset.tab, button);
+            });
+        });
+
+        // Handle URL parameter for tab activation (e.g., /quizzes/?tab=category-X)
+        const urlParams = new URLSearchParams(window.location.search);
+        const tabFromUrl = urlParams.get('tab');
+        if (tabFromUrl) {
+            const tabButtonToActivate = document.querySelector(`.tab-button[data-tab="${tabFromUrl}"]`);
+            if (tabButtonToActivate) {
+                activateTab(tabFromUrl, tabButtonToActivate);
             }
-        });
-
-        const tabRect = clickedButton.getBoundingClientRect();
-        const containerRect = clickedButton.parentElement.getBoundingClientRect();
-        indicator.style.left = (tabRect.left - containerRect.left) + "px";
-        indicator.style.width = tabRect.width + "px";
-    }
-
-    // Inicializa posición de la línea amarilla
-    const initialActive = document.querySelector(".tab-button.active");
-    if (initialActive) {
-        activateTab(initialActive.dataset.tab, initialActive);
-    }
-
-    tabButtons.forEach(button => {
-        button.addEventListener("click", () => {
-            activateTab(button.dataset.tab, button);
-        });
+        }
     });
-});
 </script>
-
-
-
-
 
 </body>
 </html>

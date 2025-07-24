@@ -1,0 +1,18 @@
+{% load static %}
+
+<a href="{% url 'guiziapp:iniciar_quiz' quiz.id %}" class="quiz-card">
+    {# ELIMINAMOS utp.jpg DE AQUÍ. Esta imagen es para la tarjeta, no el fondo del juego. #}
+    <div class="quiz-card-image" style="background: linear-gradient(to bottom right, #1E6C6A, #4CAF50); display: flex; align-items: center; justify-content: center;">
+        {# Puedes poner un icono o el logo de Guizi aquí, o una imagen más representativa del quiz #}
+        <span style="color: white; font-size: 2em; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">QUIZ</span>
+        {# Opcional: <img src="{% static 'img/icono_categoria_default.png' %}" alt="Icono Quiz" style="max-width: 80px;"> #}
+    </div>
+    <div class="quiz-card-content">
+        <h3>{{ quiz.titulo }}</h3>
+        <p>{{ quiz.descripcion|default:"Un divertido quiz para poner a prueba tus conocimientos." }}</p>
+        <div class="quiz-card-meta">
+            <span>Categoría: {{ quiz.categoria.nombre }}</span>
+            <span>Creador: {{ quiz.creador.username }}</span>
+        </div>
+    </div>
+</a>

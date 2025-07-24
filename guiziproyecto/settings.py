@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os # ¡Asegúrate de importar os!
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-g=%51ly&_6t!(x0+)_9(*fh4)b7j=@4k8nt21lt!31h1xdh-j1'
+SECRET_KEY = 'django-insecure-g=%51ly&_6t!(x0+)_9(*fh4)b7j=@4k8nt21lt!31h1xdh-j1' # Mantén tu clave secreta
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,9 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
-    'guiziapp',
 
+    'guiziapp', # Tu aplicación
 ]
 
 MIDDLEWARE = [
@@ -52,19 +52,22 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# CORRECCIÓN: Usar 'guiziproyecto.urls' según tu configuración actual
 ROOT_URLCONF = 'guiziproyecto.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
-        'APP_DIRS': True,
+        # Puedes añadir BASE_DIR / 'templates' si tienes plantillas a nivel de proyecto
+        'DIRS': [], # Mantengo vacío si todas tus plantillas están en APP_DIRS
+        'APP_DIRS': True, # Esto es CRÍTICO para encontrar las plantillas en las carpetas 'templates' de tus apps
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug', # Agregado para depuración
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'django.contrib.auth.context_processors.auth',
+                # Duplicado 'django.contrib.auth.context_processors.auth' eliminado
             ],
         },
     },
@@ -106,12 +109,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
+# CORRECCIÓN: Tu configuración de idioma y zona horaria
+LANGUAGE_CODE = 'es-pa' # Puedes ajustar a tu región
+TIME_ZONE = 'America/Panama' # Ajusta a tu zona horaria (importante para fechas/horas correctas)
 
 USE_I18N = True
-
 USE_TZ = True
 
 
@@ -119,6 +121,19 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = '/static/'
+# CORRECCIÓN: Definir STATIC_ROOT para 'collectstatic'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_collected')
+
+# CORRECCIÓN: Definir MEDIA_URL y MEDIA_ROOT para imágenes subidas
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Tu configuración específica de STATICFILES_DIRS está bien, pero asegurémonos de que apunte a la ruta correcta.
+# Si tienes una carpeta 'static' en la raíz del proyecto además de la de la app:
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'guiziapp', 'static'), # Ruta para la carpeta 'static' de tu app guiziapp
+    # os.path.join(BASE_DIR, 'static'), # Si tuvieras una carpeta 'static' global en la raíz del proyecto
+]
 
 
 # Default primary key field type
@@ -126,16 +141,19 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+LOGIN_URL = '/login/' # Tu URL de login
 
-STATICFILES_DIRS = [
-    BASE_DIR /"guiziapp"/ "static",
-]
-
-
-LOGIN_URL = '/login/'
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-  
+# Configuración para mensajes de Django (para mensajes de success/error)
+from django.contrib.messages import constants as messages_constants
+MESSAGE_TAGS = {
+    messages_constants.DEBUG: 'alert-info',
+    messages_constants.INFO: 'alert-info',
+    messages_constants.SUCCESS: 'alert-success',
+    messages_constants.WARNING: 'alert-warning',
+    messages_constants.ERROR: 'alert-danger',
+}

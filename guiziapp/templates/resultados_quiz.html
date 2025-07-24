@@ -1,0 +1,105 @@
+{% load static %}
+{% include 'partials/header_actividades.html' %} {# Asumo que tienes este header #}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados del Quiz - Guizi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+15&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f2f5;
+            font-family: 'Lato', sans-serif;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            flex-grow: 1;
+        }
+        h2 {
+            font-family: 'Jersey 15', sans-serif;
+            color: #1E6C6A;
+            margin-bottom: 20px;
+            font-size: 2.8em;
+        }
+        .results-summary {
+            margin-bottom: 30px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 20px;
+        }
+        .results-summary p {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        .score {
+            font-family: 'Jersey 15', sans-serif;
+            font-size: 4em;
+            color: #f58634;
+            margin-bottom: 10px;
+        }
+        .time-taken {
+            font-size: 1em;
+            color: #666;
+        }
+        .action-buttons {
+            margin-top: 30px;
+        }
+        .action-buttons a {
+            display: inline-block;
+            background-color: #1E6C6A;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 10px;
+            transition: background-color 0.3s ease;
+        }
+        .action-buttons a:hover {
+            background-color: #135352;
+        }
+        .action-buttons .ranking-button {
+            background-color: #f58634;
+        }
+        .action-buttons .ranking-button:hover {
+            background-color: #d26900;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Resultados del Quiz</h2>
+        <p style="font-size: 1.3em; color: #555;">¡Felicidades, <span style="font-weight: bold;">{{ intento.get_player_name }}</span>!</p>
+
+        <div class="results-summary">
+            <p>Quiz: <span style="font-weight: bold;">{{ intento.quiz.titulo }}</span></p>
+            <p>Preguntas Correctas: <span style="font-weight: bold;">{{ respuestas_correctas }} / {{ total_preguntas }}</span></p>
+            <p>Porcentaje de Acierto: <span style="font-weight: bold;">{{ porcentaje_acierto }}%</span></p>
+            <p class="score">Puntaje Final: {{ intento.puntaje }}</p>
+            <p class="time-taken">Tiempo Total: {{ intento.tiempo_transcurrido_segundos }} segundos</p>
+        </div>
+
+        <div class="action-buttons">
+            <a href="{% url 'guiziapp:lista_quizzes' %}">Volver a los Quizzes</a>
+            <a href="{% url 'guiziapp:ranking' %}" class="ranking-button">Ver Ranking</a>
+            {# Opcional: Botón para intentar el mismo quiz de nuevo #}
+            <a href="{% url 'guiziapp:iniciar_quiz' intento.quiz.id %}">Jugar de Nuevo</a>
+        </div>
+    </div>
+    {% include 'partials/footer.html' %} {# Asumo que tienes este footer #}
+</body>
+</html>

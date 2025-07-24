@@ -1,0 +1,130 @@
+{% load static %}
+{% include 'partials/header_actividades.html' %} {# Asumo que tienes este header #}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranking Top 10 - Guizi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+15&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f2f5;
+            font-family: 'Lato', sans-serif;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            flex-grow: 1;
+        }
+        h2 {
+            font-family: 'Jersey 15', sans-serif;
+            color: #1E6C6A;
+            margin-bottom: 30px;
+            font-size: 2.8em;
+        }
+        .ranking-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+        .ranking-table th, .ranking-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+        .ranking-table th {
+            background-color: #f8f8f8;
+            font-weight: bold;
+            color: #555;
+            text-transform: uppercase;
+            font-size: 0.9em;
+        }
+        .ranking-table td {
+            font-size: 1em;
+            color: #333;
+        }
+        .ranking-table tr:nth-child(even) {
+            background-color: #fefefe;
+        }
+        .ranking-table tr:hover {
+            background-color: #f0f0f0;
+        }
+        .ranking-table td.position {
+            font-weight: bold;
+            color: #f58634;
+            font-size: 1.1em;
+        }
+        .no-ranking-message {
+            font-size: 1.2em;
+            color: #666;
+            margin-top: 50px;
+            padding: 20px;
+            border: 1px dashed #ddd;
+            border-radius: 8px;
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 40px;
+            background-color: #1E6C6A;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .back-button:hover {
+            background-color: #135352;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Ranking Top 10</h2>
+
+        {% if ranking %}
+            <table class="ranking-table">
+                <thead>
+                    <tr>
+                        <th>Posición</th>
+                        <th>Jugador</th>
+                        <th>Quiz</th>
+                        <th>Puntaje</th>
+                        <th>Tiempo (s)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in ranking %}
+                        <tr>
+                            <td class="position">{{ item.posicion }}</td>
+                            <td>{{ item.nombre_jugador }}</td>
+                            <td>{{ item.quiz_titulo }}</td>
+                            <td>{{ item.puntaje }}</td>
+                            <td>{{ item.tiempo_segundos }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="no-ranking-message">¡Nadie ha completado un quiz todavía! Sé el primero en aparecer aquí.</p>
+        {% endif %}
+
+        <a href="{% url 'guiziapp:lista_quizzes' %}" class="back-button">Volver a los Quizzes</a>
+    </div>
+    {% include 'partials/footer.html' %} {# Asumo que tienes este footer #}
+</body>
+</html>
